@@ -11,8 +11,16 @@ services:
     restart: unless-stopped
     volumes:
     - grafana-data:/var/lib/grafana
+    - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
     - 3000:3000
+    environment:
+      VIRTUAL_HOST: domain.com
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: domain.com
+      LETSENCRYPT_EMAIL: email@gmail.com
+    networks:
+      - web
 
   prometheus:
     image: prom/prometheus:v2.28.1
@@ -56,3 +64,6 @@ services:
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
     
+networks:
+  web:
+    external: true
