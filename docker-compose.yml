@@ -28,7 +28,6 @@ services:
     - '--storage.tsdb.path=/prometheus'
     - '--storage.tsdb.retention.time=1y'
     - '--web.enable-lifecycle'
-
   
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
@@ -36,13 +35,6 @@ services:
     restart: unless-stopped
     ports:
     - 9100:9100
-    ###### linux
-    #command:
-    #  - '--path.rootfs=/host'
-    #pid: host
-    #volumes:
-    #  - '/:/host:ro,rslave'
-    ###### windows
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -64,11 +56,3 @@ services:
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
     
-  app_example:
-    image: quay.io/brancz/prometheus-example-app:v0.3.0
-    container_name: app_example
-    restart: unless-stopped
-    ports:
-    - 80:8080
-
-  
